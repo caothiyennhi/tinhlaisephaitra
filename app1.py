@@ -39,8 +39,8 @@ st.markdown("""
 
     /* 2. ÉP Ô NHẬP SỐ (NUMBER INPUT) THÀNH TRẮNG, CHỮ ĐEN */
     div[data-testid="stNumberInput"] div {
-        background-color: #000000 !important;
-        color: #ffffff !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
     }
     div[data-testid="stNumberInput"] input {
         background-color: #ffffff !important;
@@ -62,8 +62,8 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] {
 
 /* 2. Chuyển nền của các ô chứa chữ bên trong thành màu trắng và chữ màu đen */
 div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
 }
 
 /* 3. Ép chữ hiển thị của lựa chọn đang chọn (ví dụ: "Mua nhà") thành màu đen */
