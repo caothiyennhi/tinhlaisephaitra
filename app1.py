@@ -94,10 +94,11 @@ st.markdown("""
         color: #000000 !important;
     }
     
-    /* Ép chữ của từng lựa chọn bên trong thành đen đậm rõ nét */
-    div[data-baseweb="popover"] [role="option"] * {
-        background-color: transparent !important;
-        color: #000000 !important;
+   /* Ép chữ của từng lựa chọn bên trong thành màu đen và nền màu trắng */
+div[data-baseweb="popover"] [role="option"] * {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
     }
     
     /* HIỆU ỨNG KHI RE CHUỘT (HOVER) HOẶC ĐANG CHỌN (SELECTED) */
