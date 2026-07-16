@@ -37,7 +37,7 @@ st.markdown("""
         font-weight: bold !important;
     }
 
-    /* 2. CHUYỂN CÁC Ô NHẬP LIỆU (NUMBER INPUT) THÀNH TRẮNG, CHỮ ĐEN */
+    /* 2. ÉP Ô NHẬP SỐ (NUMBER INPUT) THÀNH TRẮNG, CHỮ ĐEN */
     div[data-testid="stNumberInput"] div {
         background-color: #ffffff !important;
         color: #000000 !important;
@@ -50,10 +50,10 @@ st.markdown("""
     div[data-testid="stNumberInput"] button {
         background-color: #f1f5f9 !important;
         color: #000000 !important;
-        border: 1px solid #000000 !important;
+        border: 1px solid #cbd5e1 !important;
     }
 
-    /* 3. CHUYỂN Ô CHỌN (SELECTBOX) THÀNH TRẮNG, CHỮ ĐEN */
+    /* 3. ÉP Ô CHỌN (SELECTBOX - MỤC ĐÍCH VAY) THÀNH TRẮNG, CHỮ ĐEN HOÀN TOÀN */
     div[data-testid="stSelectbox"] div[data-baseweb="select"] {
         background-color: #ffffff !important;
         color: #000000 !important;
@@ -71,15 +71,16 @@ st.markdown("""
     }
     
     /* Ép bảng menu thả xuống của Selectbox thành nền trắng chữ đen */
-    div[role="listbox"] {
+    div[role="listbox"], ul[role="listbox"] {
         background-color: #ffffff !important;
         border: 1px solid #000000 !important;
     }
-    div[role="listbox"] div, div[role="listbox"] li {
+    div[role="listbox"] div, div[role="listbox"] li,
+    ul[role="listbox"] div, ul[role="listbox"] li {
         background-color: #ffffff !important;
         color: #000000 !important;
     }
-    div[role="listbox"] li:hover {
+    div[role="listbox"] li:hover, ul[role="listbox"] li:hover {
         background-color: #f1f5f9 !important;
     }
 
@@ -111,23 +112,22 @@ st.markdown("""
         text-align: left !important;
     }
 
-    /* 5. THIẾT KẾ CÁC CONTAINER CARD CHỨA THÔNG TIN */
-    .input-card, .result-card {
+    /* 5. ĐỒNG BỘ CÁC NỀN KHUNG CONTAINER SÁNG TRẮNG ĐẸP MẮT (BẢN ĐỊA STREAMLIT) */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
         background-color: #ffffff !important;
-        border-radius: 16px !important;
-        padding: 25px !important;
         border: 1px solid #cbd5e1 !important;
-        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05) !important;
-        margin-bottom: 25px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05) !important;
+        padding: 20px !important;
     }
     
-    .result-card .label {
+    .result-label {
         font-size: 15px !important;
         color: #475569 !important;
         font-weight: bold !important;
     }
     
-    .result-card .value {
+    .result-value {
         font-size: 26px !important;
         font-weight: bold !important;
         color: #0284c7 !important;
@@ -168,40 +168,39 @@ lai_suat = {
     "Du học": 9
 }
 
-# Khung nhập thông tin vay
-st.markdown('<div class="input-card">', unsafe_allow_html=True)
-st.write("### 📝 Nhập thông tin kế hoạch vay")
+# Khung nhập thông tin vay (sử dụng container bản địa tránh lỗi ô trắng trống)
+with st.container(border=True):
+    st.write("### 📝 Nhập thông tin kế hoạch vay")
 
-col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
 
-with col1:
-    so_tien = st.number_input(
-        "Số tiền vay (triệu đồng)",
-        min_value=1.0,
-        value=500.0,
-        step=10.0
-    )
+    with col1:
+        so_tien = st.number_input(
+            "Số tiền vay (triệu đồng)",
+            min_value=1.0,
+            value=500.0,
+            step=10.0
+        )
 
-    muc_dich = st.selectbox(
-        "Mục đích vay",
-        list(lai_suat.keys())
-    )
+        muc_dich = st.selectbox(
+            "Mục đích vay",
+            list(lai_suat.keys())
+        )
 
-with col2:
-    thoi_han = st.slider(
-        "Thời hạn vay (năm)",
-        1,
-        30,
-        10
-    )
+    with col2:
+        thoi_han = st.slider(
+            "Thời hạn vay (năm)",
+            1,
+            30,
+            10
+        )
 
-    lai_nam = lai_suat[muc_dich]
+        lai_nam = lai_suat[muc_dich]
 
-st.info(f"💡 Lãi suất áp dụng cho mục đích **{muc_dich}**: **{lai_nam}%/năm**")
-st.markdown('</div>', unsafe_allow_html=True)
+    st.info(f"💡 Lãi suất áp dụng cho mục đích **{muc_dich}**: **{lai_nam}%/năm**")
 
 #==========================
-# Tính toán
+# Tính toán các phương án
 #==========================
 thang = thoi_han * 12
 lai_thang = lai_nam / 100 / 12
@@ -262,35 +261,33 @@ st.header("⚖️ SO SÁNH HAI PHƯƠNG THỨC TRẢ NỢ")
 c1, c2 = st.columns(2)
 
 with c1:
-    st.markdown('<div class="result-card">', unsafe_allow_html=True)
-    st.markdown('<h3>Phương án 1: Trả gốc đều - Lãi giảm dần</h3>', unsafe_allow_html=True)
-    
-    sc1, sc2 = st.columns(2)
-    with sc1:
-        st.markdown(f'<p class="label">Tổng tiền lãi</p><p class="value">{tong_lai1:,.2f} Tr</p>', unsafe_allow_html=True)
-    with sc2:
-        st.markdown(f'<p class="label">Tổng thanh toán</p><p class="value">{so_tien+tong_lai1:,.2f} Tr</p>', unsafe_allow_html=True)
+    with st.container(border=True):
+        st.markdown('### Phương án 1: Trả gốc đều - Lãi giảm dần')
+        
+        sc1, sc2 = st.columns(2)
+        with sc1:
+            st.markdown(f'<p class="result-label">Tổng tiền lãi</p><p class="result-value">{tong_lai1:,.2f} Tr</p>', unsafe_allow_html=True)
+        with sc2:
+            st.markdown(f'<p class="result-label">Tổng thanh toán</p><p class="result-value">{so_tien+tong_lai1:,.2f} Tr</p>', unsafe_allow_html=True)
 
-    st.write("#### Lịch chi tiết trả nợ")
-    st.dataframe(df1, height=300, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+        st.write("#### Lịch chi tiết trả nợ")
+        st.dataframe(df1, height=300, use_container_width=True)
 
 with c2:
-    st.markdown('<div class="result-card">', unsafe_allow_html=True)
-    st.markdown('<h3>Phương án 2: Trả đều hàng tháng (Annuity)</h3>', unsafe_allow_html=True)
-    
-    sc1, sc2 = st.columns(2)
-    with sc1:
-        st.markdown(f'<p class="label">Tổng tiền lãi</p><p class="value">{tong_lai2:,.2f} Tr</p>', unsafe_allow_html=True)
-    with sc2:
-        st.markdown(f'<p class="label">Tổng thanh toán</p><p class="value">{so_tien+tong_lai2:,.2f} Tr</p>', unsafe_allow_html=True)
+    with st.container(border=True):
+        st.markdown('### Phương án 2: Trả đều hàng tháng (Annuity)')
+        
+        sc1, sc2 = st.columns(2)
+        with sc1:
+            st.markdown(f'<p class="result-label">Tổng tiền lãi</p><p class="result-value">{tong_lai2:,.2f} Tr</p>', unsafe_allow_html=True)
+        with sc2:
+            st.markdown(f'<p class="result-label">Tổng thanh toán</p><p class="result-value">{so_tien+tong_lai2:,.2f} Tr</p>', unsafe_allow_html=True)
 
-    st.write("#### Lịch chi tiết trả nợ")
-    st.dataframe(df2, height=300, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+        st.write("#### Lịch chi tiết trả nợ")
+        st.dataframe(df2, height=300, use_container_width=True)
 
 #==========================
-# TỔNG PHẢI THANH TOÁN
+# TỔNG PHẢI THANH TOÁN (LƯỚI 3X3)
 #==========================
 st.header("📋 BÁO CÁO PHÂN TÍCH TỔNG HỢP")
 
@@ -301,33 +298,32 @@ ss = pd.DataFrame({
     "Trả đều hàng tháng (PA 2)": [f"{tong_lai2:,.2f} triệu", f"{so_tien+tong_lai2:,.2f} triệu"]
 })
 
-st.markdown('<div class="result-card">', unsafe_allow_html=True)
-st.table(ss)
+with st.container(border=True):
+    st.table(ss)
 
-# Phần gợi ý tư vấn động dựa trên kết quả tính toán
-if tong_lai1 < tong_lai2:
-    st.markdown(f"""
-<div class="advice-card">
-    <div class="title">💡 GỢI Ý TỪ CỐ VẤN TÀI CHÍNH</div>
-    <ul>
-        <li>✔ Bạn nên chọn <b>Phương án 1 (Dư nợ giảm dần)</b> để tiết kiệm được khoảng <b>{(tong_lai2 - tong_lai1):,.2f} triệu đồng</b> tiền lãi.</li>
-        <li>✔ Phương án này cực kỳ tối ưu nếu bạn có nguồn thu nhập ổn định và dư dả trong thời gian đầu.</li>
-        <li>✔ Dư nợ gốc giảm nhanh giúp giảm áp lực lãi suất về sau.</li>
-    </ul>
-</div>
-""", unsafe_allow_html=True)
-else:
-    st.markdown(f"""
-<div class="advice-card" style="background-color: #eff6ff !important; border-color: #bfdbfe !important;">
-    <div class="title" style="color: #1e40af !important;">💡 GỢI Ý TỪ CỐ VẤN TÀI CHÍNH</div>
-    <ul style="color: #1e3a8a !important;">
-        <li>✔ Bạn nên chọn <b>Phương án 2 (Trả đều hàng tháng)</b>.</li>
-        <li>✔ Số tiền trả cố định giúp bạn dễ dàng lập kế hoạch chi tiêu hàng tháng mà không lo biến động tài chính.</li>
-        <li>✔ Rất phù hợp cho người đi làm hưởng lương cố định.</li>
-    </ul>
-</div>
-""", unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
+    # Phần gợi ý tư vấn động dựa trên kết quả tính toán
+    if tong_lai1 < tong_lai2:
+        st.markdown(f"""
+    <div class="advice-card">
+        <div class="title">💡 GỢI Ý TỪ CỐ VẤN TÀI CHÍNH</div>
+        <ul>
+            <li>✔ Bạn nên chọn <b>Phương án 1 (Dư nợ giảm dần)</b> để tiết kiệm được khoảng <b>{(tong_lai2 - tong_lai1):,.2f} triệu đồng</b> tiền lãi.</li>
+            <li>✔ Phương án này cực kỳ tối ưu nếu bạn có nguồn thu nhập ổn định và dư dả trong thời gian đầu.</li>
+            <li>✔ Dư nợ gốc giảm nhanh giúp giảm áp lực lãi suất về sau.</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    else:
+        st.markdown(f"""
+    <div class="advice-card" style="background-color: #eff6ff !important; border-color: #bfdbfe !important;">
+        <div class="title" style="color: #1e40af !important;">💡 GỢI Ý TỪ CỐ VẤN TÀI CHÍNH</div>
+        <ul style="color: #1e3a8a !important;">
+            <li>✔ Bạn nên chọn <b>Phương án 2 (Trả đều hàng tháng)</b>.</li>
+            <li>✔ Số tiền trả cố định giúp bạn dễ dàng lập kế hoạch chi tiêu hàng tháng mà không lo biến động tài chính.</li>
+            <li>✔ Rất phù hợp cho người đi làm hưởng lương cố định.</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
 
 #==========================
 # BIỂU ĐỒ CỘT THEO NĂM
@@ -381,7 +377,6 @@ ax.spines["left"].set_color("#cbd5e1")
 ax.spines["bottom"].set_color("#cbd5e1")
 ax.tick_params(colors="#475569")
 
-# Đưa biểu đồ vào khung kết quả sáng
-st.markdown('<div class="result-card">', unsafe_allow_html=True)
-st.pyplot(fig)
-st.markdown('</div>', unsafe_allow_html=True)
+# Đưa biểu đồ vào khung kết quả sáng bản địa
+with st.container(border=True):
+    st.pyplot(fig)
