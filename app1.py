@@ -66,9 +66,9 @@ div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
     color: #ffffff !important;
 }
 
-/* 3. Ép chữ hiển thị của lựa chọn đang chọn (ví dụ: "Mua nhà") thành màu đen */
+/* 3. Ép chữ hiển thị của lựa chọn đang chọn (ví dụ: "Mua nhà") thành màu trắng */
 div[data-testid="stSelectbox"] span {
-    color: #000000 !important;
+    color: #ffffff !important;
 }
 
 /* 4. Đổi màu biểu tượng mũi tên trỏ xuống thành màu đen */
