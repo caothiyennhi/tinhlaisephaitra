@@ -200,7 +200,7 @@ else:
 
 ✔ Phù hợp người có thu nhập ổn định
 """)
-  st.markdown("""
+st.markdown("""
 <div class="section-title">
 📈 BIỂU ĐỒ DƯ NỢ CÒN LẠI
 </div>
