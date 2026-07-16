@@ -234,19 +234,67 @@ else:
 #==========================
 #==========================
 #==========================
+#==========================
 # BIỂU ĐỒ CỘT THEO NĂM
 #==========================
 
+import matplotlib.pyplot as plt
+
 st.header("📊 Biểu đồ số tiền còn lại phải trả theo năm")
 
-# Lấy dữ liệu cuối mỗi năm
+# Lấy số dư nợ cuối mỗi năm
 df_nam = df1[df1["Tháng"] % 12 == 0].copy()
 
-# Tạo cột năm
-df_nam["Năm"] = range(1, len(df_nam) + 1)
+# Nếu năm cuối chưa đủ 12 tháng thì vẫn lấy
+if df1.iloc[-1]["Tháng"] % 12 != 0:
+    df_nam = pd.concat([df_nam, df1.tail(1)])
 
-# Hiển thị biểu đồ
-st.bar_chart(
-    df_nam.set_index("Năm")["Dư nợ còn lại"]
+# Tạo tên năm
+nam = [f"Năm {i+1}" for i in range(len(df_nam))]
+du_no = df_nam["Dư nợ còn lại"].values
+
+fig, ax = plt.subplots(figsize=(10,5))
+
+# Màu cột
+bars = ax.bar(
+    nam,
+    du_no,
+    color="#5cb85c",
+    edgecolor="black",
+    width=0.6
 )
+
+# Hiển thị số trên đầu cột
+for bar in bars:
+    h = bar.get_height()
+    ax.text(
+        bar.get_x()+bar.get_width()/2,
+        h+3,
+        f"{h:.1f}",
+        ha="center",
+        va="bottom",
+        fontsize=10,
+        fontweight="bold"
+    )
+
+# Tiêu đề
+ax.set_title(
+    "Số tiền còn lại phải trả theo từng năm",
+    fontsize=14,
+    fontweight="bold"
+)
+
+# Tên trục
+ax.set_ylabel("Triệu đồng")
+ax.set_xlabel("")
+
+# Đường lưới ngang giống Excel
+ax.grid(axis="y", linestyle="--", alpha=0.5)
+
+# Ẩn 2 cạnh trên và phải
+ax.spines["top"].set_visible(False)
+ax.spines["right"].set_visible(False)
+
+st.pyplot(fig)
+
 
