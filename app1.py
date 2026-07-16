@@ -53,41 +53,42 @@ st.markdown("""
         border: 1px solid #cbd5e1 !important;
     }
 
-    /* 3. ÉP Ô CHỌN (SELECTBOX - MỤC ĐÍCH VAY) THÀNH TRẮNG, CHỮ ĐEN HOÀN TOÀN */
-    div[data-testid="stSelectbox"] div[data-baseweb="select"] {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-        border: 1px solid #cbd5e1 !important;
-    }
-    div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-    }
-    div[data-testid="stSelectbox"] svg {
-        fill: #000000 !important; /* Đổi màu mũi tên xổ xuống thành đen */
-    }
-    div[data-testid="stSelectbox"] span {
-        color: #000000 !important;
-    }
-    
-    /* Ép bảng menu thả xuống của Selectbox thành nền trắng chữ đen */
-    div[role="listbox"], ul[role="listbox"] {
-        background-color: #ffffff !important;
-        border: 1px solid #000000 !important;
-    }
-    div[role="listbox"] div, div[role="listbox"] li,
-    ul[role="listbox"] div, ul[role="listbox"] li {
-        background-color: #ffffff !important;
-        color: #000000 !important;
-    }
-    div[role="listbox"] li:hover, ul[role="listbox"] li:hover {
-        background-color: #f1f5f9 !important;
-    }
+    /* 1. Chuyển nền khung ngoài của Selectbox thành màu trắng */
+div[data-testid="stSelectbox"] div[data-baseweb="select"] {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important; /* Viền xám nhạt cho đẹp */
+    border-radius: 8px !important;
+}
 
-    /* Thanh trượt (Slider) chữ đen */
-    div[data-testid="stSlider"] * {
-        color: #000000 !important;
-    }
+/* 2. Chuyển nền của các ô chứa chữ bên trong thành màu trắng và chữ màu đen */
+div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* 3. Ép chữ hiển thị của lựa chọn đang chọn (ví dụ: "Mua nhà") thành màu đen */
+div[data-testid="stSelectbox"] span {
+    color: #000000 !important;
+}
+
+/* 4. Đổi màu biểu tượng mũi tên trỏ xuống thành màu đen */
+div[data-testid="stSelectbox"] svg {
+    fill: #000000 !important;
+}
+
+/* 5. Chỉnh luôn cả danh sách lựa chọn khi bấm click mở ô ra (nền trắng, chữ đen) */
+div[role="listbox"], ul[role="listbox"] {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+}
+div[role="listbox"] li, ul[role="listbox"] li {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+}
+/* Hiệu ứng khi di chuột qua các dòng lựa chọn */
+div[role="listbox"] li:hover, ul[role="listbox"] li:hover {
+    background-color: #f1f5f9 !important;
+}
 
     /* 4. CHỈNH KHUNG BẢNG TỔNG HỢP THÀNH LƯỚI 3X3 CÓ GẠCH CHIA Ô MÀU ĐEN RÕ RÀNG */
     .stTable table {
