@@ -9,106 +9,109 @@ plt.rcParams["font.family"] = "Times New Roman"
 st.set_page_config(page_title="Ứng dụng tính khoản vay", layout="wide")
 
 # =========================================================================
-# CSS ÉP GIAO DIỆN SÁNG (XÓA Ô ĐEN) & ĐỒNG BỘ PHÔNG CHỮ TIMES NEW ROMAN
+# CSS ÉP GIAO DIỆN SÁNG, CHỮ ĐEN, Ô NHẬP TRẮNG & KẺ LƯỚI BẢNG 3X3 ĐEN ĐẬM
 # =========================================================================
 st.markdown("""
 <style>
-    /* 1. ÉP PHÔNG CHỮ TIMES NEW ROMAN CHO TOÀN BỘ ỨNG DỤNG */
+    /* 1. ĐỒNG BỘ PHÔNG CHỮ TIMES NEW ROMAN TOÀN CẦU */
     * {
         font-family: 'Times New Roman', Times, serif !important;
     }
     
-    /* 2. CHUYỂN TOÀN BỘ CHỮ SANG MÀU TỐI ĐỂ NỔI TRÊN NỀN SÁNG */
-    h1, h2, h3, h4, h5, h6, p, span, label, li, td, th {
-        color: #1e293b !important;
+    /* Ép toàn bộ chữ hiển thị trên trang thành màu đen */
+    h1, h2, h3, h4, h5, h6, p, span, label, li, td, th, input {
+        color: #000000 !important;
     }
 
-    /* 3. NỀN TRANG WEB SÁNG DỊU MẮT */
+    /* Nền trang web sáng nhẹ nhàng */
     [data-testid="stAppViewContainer"] {
         background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
     }
 
     /* Tiêu đề chính */
     .main-title {
-        color: #0f172a !important;
+        color: #000000 !important;
         text-align: center;
         margin-bottom: 30px;
         font-size: 34px !important;
-        font-weight: 800 !important;
+        font-weight: bold !important;
     }
 
-    /* 4. CHỈNH Ô NHẬP SỐ (NUMBER INPUT) THÀNH MÀU TRẮNG */
-    div[data-baseweb="input"] {
+    /* 2. CHUYỂN CÁC Ô NHẬP LIỆU (NUMBER INPUT) THÀNH TRẮNG, CHỮ ĐEN */
+    div[data-testid="stNumberInput"] div {
         background-color: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
-        border-radius: 8px !important;
+        color: #000000 !important;
     }
-    div[data-baseweb="input"] input {
+    div[data-testid="stNumberInput"] input {
         background-color: #ffffff !important;
-        color: #1e293b !important;
+        color: #000000 !important;
     }
-    /* Nút tăng/giảm số (+/-) */
-    div[data-baseweb="input"] button {
+    /* Các nút cộng / trừ (+ / -) bên cạnh ô nhập số */
+    div[data-testid="stNumberInput"] button {
         background-color: #f1f5f9 !important;
-        color: #1e293b !important;
-        border: none !important;
+        color: #000000 !important;
+        border: 1px solid #000000 !important;
     }
 
-    /* 5. CHỈNH Ô CHỌN (SELECTBOX) THÀNH MÀU TRẮNG */
-    div[data-baseweb="select"] {
+    /* 3. CHUYỂN Ô CHỌN (SELECTBOX) THÀNH TRẮNG, CHỮ ĐEN */
+    div[data-testid="stSelectbox"] div[data-baseweb="select"] {
         background-color: #ffffff !important;
+        color: #000000 !important;
         border: 1px solid #cbd5e1 !important;
-        border-radius: 8px !important;
     }
-    div[data-baseweb="select"] > div {
+    div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
         background-color: #ffffff !important;
-        color: #1e293b !important;
+        color: #000000 !important;
     }
-    div[data-baseweb="select"] span {
-        color: #1e293b !important;
+    div[data-testid="stSelectbox"] svg {
+        fill: #000000 !important; /* Đổi màu mũi tên xổ xuống thành đen */
     }
-    /* Biểu tượng mũi tên trỏ xuống */
-    div[data-baseweb="select"] svg {
-        fill: #1e293b !important;
+    div[data-testid="stSelectbox"] span {
+        color: #000000 !important;
     }
-
-    /* Đổi màu menu danh sách lựa chọn khi click mở Selectbox */
+    
+    /* Ép bảng menu thả xuống của Selectbox thành nền trắng chữ đen */
     div[role="listbox"] {
         background-color: #ffffff !important;
+        border: 1px solid #000000 !important;
     }
-    div[role="listbox"] * {
-        color: #1e293b !important;
+    div[role="listbox"] div, div[role="listbox"] li {
         background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    div[role="listbox"] li:hover {
+        background-color: #f1f5f9 !important;
     }
 
-    /* 6. CHỈNH THANH TRƯỢT (SLIDER) */
+    /* Thanh trượt (Slider) chữ đen */
     div[data-testid="stSlider"] * {
-        color: #1e293b !important;
+        color: #000000 !important;
     }
 
-    /* 7. CHỈNH ĐẦU BẢNG (TABLE HEADER) THÀNH MÀU TRẮNG/XÁM SÁNG */
+    /* 4. CHỈNH KHUNG BẢNG TỔNG HỢP THÀNH LƯỚI 3X3 CÓ GẠCH CHIA Ô MÀU ĐEN RÕ RÀNG */
     .stTable table {
         background-color: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
+        border: 2px solid #000000 !important; /* Viền ngoài màu đen */
         border-collapse: collapse !important;
-        border-radius: 8px !important;
-        overflow: hidden !important;
+        width: 100% !important;
     }
     .stTable th {
-        background-color: #f1f5f9 !important; /* Đổi đầu bảng từ đen sang xám trắng */
-        color: #0f172a !important; /* Chữ màu đen sẫm dễ nhìn */
+        background-color: #f1f5f9 !important; /* Nền tiêu đề xám nhẹ */
+        color: #000000 !important;
         font-weight: bold !important;
-        border-bottom: 2px solid #cbd5e1 !important;
+        border: 2px solid #000000 !important; /* Gạch phân tách cột tiêu đề màu đen */
         padding: 12px !important;
+        text-align: left !important;
     }
     .stTable td {
         background-color: #ffffff !important;
-        color: #334155 !important;
-        border-bottom: 1px solid #e2e8f0 !important;
+        color: #000000 !important;
+        border: 2px solid #000000 !important; /* Gạch ngang/dọc chia các ô thành lưới 3x3 màu đen rõ rệt */
         padding: 12px !important;
+        text-align: left !important;
     }
 
-    /* 8. THIẾT KẾ CONTAINER CARD TRẮNG BO TRÒN */
+    /* 5. THIẾT KẾ CÁC CONTAINER CARD CHỨA THÔNG TIN */
     .input-card, .result-card {
         background-color: #ffffff !important;
         border-radius: 16px !important;
@@ -120,7 +123,7 @@ st.markdown("""
     
     .result-card .label {
         font-size: 15px !important;
-        color: #64748b !important;
+        color: #475569 !important;
         font-weight: bold !important;
     }
     
@@ -130,7 +133,7 @@ st.markdown("""
         color: #0284c7 !important;
     }
 
-    /* Khung tư vấn */
+    /* Khung gợi ý tư vấn màu xanh lá nhạt dịu */
     .advice-card {
         background-color: #f0fdf4 !important;
         border: 1px solid #bbf7d0 !important;
@@ -291,6 +294,7 @@ with c2:
 #==========================
 st.header("📋 BÁO CÁO PHÂN TÍCH TỔNG HỢP")
 
+# Xây dựng bảng 3x3 rõ nét (bao gồm 1 hàng tiêu đề và 2 hàng dữ liệu, chia 3 cột)
 ss = pd.DataFrame({
     "Tiêu chí": ["Tổng lãi phải trả", "Tổng thanh toán (Gốc + Lãi)"],
     "Dư nợ giảm dần (PA 1)": [f"{tong_lai1:,.2f} triệu", f"{so_tien+tong_lai1:,.2f} triệu"],
