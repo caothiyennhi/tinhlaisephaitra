@@ -230,33 +230,24 @@ else:
 ✔ Phù hợp người có thu nhập ổn định.
 """)
 
+
 #==========================
 # BIỂU ĐỒ
 #==========================
 
-st.header("Biểu đồ dư nợ còn lại")
+st.header("📊 Biểu đồ dư nợ còn lại")
 
-fig, ax = plt.subplots(figsize=(10,5))
+import matplotlib.pyplot as plt
 
-ax.bar(
+fig = plt.figure(figsize=(10,5))
+
+plt.bar(
     df1["Tháng"],
-    df1["Dư nợ còn lại"],
-    label="Dư nợ giảm dần"
+    df1["Dư nợ còn lại"]
 )
 
-ax.set_xlabel("Tháng")
-
-ax.set_ylabel("Triệu đồng")
-
-ax.set_title("Dư nợ còn lại theo từng tháng")
+plt.xlabel("Tháng")
+plt.ylabel("Triệu đồng")
+plt.title("Dư nợ còn lại theo từng tháng")
 
 st.pyplot(fig)
-st.subheader("📊 Biểu đồ dư nợ còn lại")
-
-chart = pd.DataFrame({
-    "Tháng": df1["Tháng"],
-    "Dư nợ giảm dần": df1["Dư nợ"],
-    "Trả góp đều": df2["Dư nợ"]
-})
-
-st.bar_chart(chart.set_index("Tháng"))
