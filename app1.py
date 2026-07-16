@@ -39,8 +39,8 @@ st.markdown("""
 
     /* 2. ÉP Ô NHẬP SỐ (NUMBER INPUT) THÀNH TRẮNG, CHỮ ĐEN */
     div[data-testid="stNumberInput"] div {
-        background-color: #ffffff !important;
-        color: #000000 !important;
+        background-color: #000000 !important;
+        color: #ffffff !important;
     }
     div[data-testid="stNumberInput"] input {
         background-color: #ffffff !important;
