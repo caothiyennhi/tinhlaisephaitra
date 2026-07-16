@@ -232,22 +232,20 @@ else:
 
 
 #==========================
-# BIỂU ĐỒ
+#==========================
+# BIỂU ĐỒ CỘT THEO NĂM
 #==========================
 
-st.header("📊 Biểu đồ dư nợ còn lại")
+st.header("📊 Biểu đồ số tiền còn lại phải trả theo năm")
 
-import matplotlib.pyplot as plt
+# Lấy dữ liệu cuối mỗi năm
+df_nam = df1[df1["Tháng"] % 12 == 0].copy()
 
-fig = plt.figure(figsize=(10,5))
+# Thêm cột năm
+df_nam["Năm"] = range(1, len(df_nam) + 1)
 
-plt.bar(
-    df1["Tháng"],
-    df1["Dư nợ còn lại"]
+st.bar_chart(
+    data=df_nam.set_index("Năm")["Dư nợ còn lại"]
 )
-
-plt.xlabel("Tháng")
-plt.ylabel("Triệu đồng")
-plt.title("Dư nợ còn lại theo từng tháng")
 
 st.pyplot(fig)
