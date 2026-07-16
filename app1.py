@@ -53,42 +53,61 @@ st.markdown("""
         border: 1px solid #cbd5e1 !important;
     }
 
-    /* 1. Chuyển nền khung ngoài của Selectbox thành màu trắng */
-div[data-testid="stSelectbox"] div[data-baseweb="select"] {
-    background-color: #ffffff !important;
-    border: 1px solid #cbd5e1 !important; /* Viền xám nhạt cho đẹp */
-    border-radius: 8px !important;
-}
+/* =========================================================================
+       3. SỬA TRIỆT ĐỂ Ô CHỌN (SELECTBOX - MỤC ĐÍCH VAY) THÀNH TRẮNG, CHỮ ĐEN 
+       ========================================================================= */
+    /* Khung viền ngoài của ô chọn (Selectbox) */
+    div[data-baseweb="select"] {
+        background-color: #ffffff !important;
+        border: 2px solid #000000 !important; /* Viền đen rõ nét */
+        border-radius: 8px !important;
+    }
+    
+    /* Chữ hiển thị bên trong ô chọn sau khi đã chọn */
+    div[data-baseweb="select"] * {
+        background-color: transparent !important;
+        color: #000000 !important; /* Chữ đen */
+    }
+    
+    /* Màu mũi tên trỏ xuống của ô chọn */
+    div[data-baseweb="select"] svg {
+        fill: #000000 !important;
+    }
 
-/* 2. Chuyển nền của các ô chứa chữ bên trong thành màu trắng và chữ màu đen */
-div[data-testid="stSelectbox"] div[data-baseweb="select"] > div {
-    background-color: #000000 !important;
-    color: #ffffff !important;
-}
+    /* --- MENU THẢ XUỐNG KHI CLICK VÀO Ô CHỌN (DROPDOWN POPUP) --- */
+    /* Khung chứa menu thả xuống */
+    div[data-baseweb="popover"] {
+        background-color: #ffffff !important;
+    }
+    div[data-baseweb="popover"] ul {
+        background-color: #ffffff !important;
+        border: 2px solid #000000 !important; /* Viền đen bao quanh menu */
+    }
+    
+    /* Từng dòng lựa chọn bên trong menu thả xuống (ví dụ: Mua nhà, Mua ô tô...) */
+    div[data-baseweb="popover"] li {
+        background-color: #ffffff !important;
+        color: #000000 !important; /* Chữ đen */
+    }
+    
+    /* Ép tất cả các thẻ con bên trong dòng lựa chọn thành chữ đen (Sửa lỗi chữ trắng tàng hình) */
+    div[data-baseweb="popover"] li * {
+        color: #000000 !important; 
+        background-color: transparent !important;
+    }
+    
+    /* Hiệu ứng khi bạn di chuột qua dòng lựa chọn */
+    div[data-baseweb="popover"] li:hover {
+        background-color: #e2e8f0 !important; /* Nền xám nhạt khi hover */
+    }
+    div[data-baseweb="popover"] li:hover * {
+        color: #000000 !important;
+    }
 
-/* 3. Ép chữ hiển thị của lựa chọn đang chọn (ví dụ: "Mua nhà") thành màu trắng */
-div[data-testid="stSelectbox"] span {
-    color: #ffffff !important;
-}
-
-/* 4. Đổi màu biểu tượng mũi tên trỏ xuống thành màu đen */
-div[data-testid="stSelectbox"] svg {
-    fill: #000000 !important;
-}
-
-/* 5. Chỉnh luôn cả danh sách lựa chọn khi bấm click mở ô ra (nền trắng, chữ đen) */
-div[role="listbox"], ul[role="listbox"] {
-    background-color: #ffffff !important;
-    border: 1px solid #cbd5e1 !important;
-}
-div[role="listbox"] li, ul[role="listbox"] li {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-}
-/* Hiệu ứng khi di chuột qua các dòng lựa chọn */
-div[role="listbox"] li:hover, ul[role="listbox"] li:hover {
-    background-color: #f1f5f9 !important;
-}
+    /* Thanh trượt (Slider) chữ đen */
+    div[data-testid="stSlider"] * {
+        color: #000000 !important;
+    }
 
     /* 4. CHỈNH KHUNG BẢNG TỔNG HỢP THÀNH LƯỚI 3X3 CÓ GẠCH CHIA Ô MÀU ĐEN RÕ RÀNG */
     .stTable table {
