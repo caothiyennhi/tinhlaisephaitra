@@ -169,7 +169,7 @@ with c3:
         "📅 Trả tháng đầu",
         f"{df1.iloc[0]['Thanh toán']:,.2f} triệu"
     )
-  st.markdown("""
+        st.markdown("""
 <div class="section-title">
 ⚖️ SO SÁNH HAI PHƯƠNG THỨC
 </div>
