@@ -58,15 +58,15 @@ st.markdown("""
        ========================================================================= */
     /* Khung viền ngoài của ô chọn (Selectbox) */
     div[data-baseweb="select"] {
-        background-color: #ffffff !important;
-        border: 2px solid #000000 !important; /* Viền đen rõ nét */
+        background-color: #000000 !important;
+        border: 2px solid #ffffff !important; /* Viền đen rõ nét */
         border-radius: 8px !important;
     }
     
     /* Chữ hiển thị bên trong ô chọn sau khi đã chọn */
     div[data-baseweb="select"] * {
         background-color: transparent !important;
-        color: #000000 !important; /* Chữ đen */
+        color: #ffffff !important; /* Chữ trắng */
     }
     
     /* Màu mũi tên trỏ xuống của ô chọn */
