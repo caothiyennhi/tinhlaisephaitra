@@ -146,30 +146,29 @@ st.markdown("""
 <div class="section-title">
 📊 KẾT QUẢ TÍNH TOÁN
 </div>
-""",unsafe_allow_html=True)
-c1,c2,c3=st.columns(3)
+""", unsafe_allow_html=True)
+
+c1, c2, c3 = st.columns(3)
 
 with c1:
-
     st.metric(
         "💰 Tổng tiền lãi",
         f"{tong_lai1:,.2f} triệu"
     )
 
 with c2:
-
     st.metric(
         "💳 Tổng phải trả",
-        f"{so_tien+tong_lai1:,.2f} triệu"
+        f"{so_tien + tong_lai1:,.2f} triệu"
     )
 
 with c3:
-
     st.metric(
         "📅 Trả tháng đầu",
         f"{df1.iloc[0]['Thanh toán']:,.2f} triệu"
     )
-        st.markdown("""
+
+st.markdown("""
 <div class="section-title">
 ⚖️ SO SÁNH HAI PHƯƠNG THỨC
 </div>
