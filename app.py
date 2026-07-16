@@ -138,10 +138,10 @@ df2=pd.DataFrame(
 )
 
 #==========================
-# KẾT QUẢ
+# SO SÁNH PHƯƠNG THỨC
 #==========================
 
-st.header("KẾT QUẢ")
+st.header("SO SÁNH PHƯƠNG THỨC")
 
 c1,c2=st.columns(2)
 
@@ -180,10 +180,10 @@ with c2:
     st.dataframe(df2,height=350)
 
 #==========================
-# SO SÁNH
+# TỔNG PHẢI THANH TOÁN
 #==========================
 
-st.header("SO SÁNH HAI PHƯƠNG THỨC")
+st.header("TỔNG PHẢI THANH TOÁN")
 
 ss = pd.DataFrame({
     "Tiêu chí":[
