@@ -2,121 +2,151 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Cấu hình cài đặt phông chữ Times New Roman cho Matplotlib (Biểu đồ)
+plt.rcParams["font.family"] = "Times New Roman"
+
 # Cấu hình trang với layout wide
 st.set_page_config(page_title="Ứng dụng tính khoản vay", layout="wide")
 
-# ==========================================
-# CSS ĐỂ ÉP GIAO DIỆN SÁNG (BẤT CHẤP DARK MODE)
-# ==========================================
+# =========================================================================
+# CSS ÉP GIAO DIỆN SÁNG (XÓA Ô ĐEN) & ĐỒNG BỘ PHÔNG CHỮ TIMES NEW ROMAN
+# =========================================================================
 st.markdown("""
 <style>
-    /* Ép nền trang web thành màu gradient sáng dịu mắt */
-    [data-testid="stAppViewContainer"] {
-        background: linear-gradient(135deg, #f5f7fa 0%, #e4ecf7 100%) !important;
+    /* 1. ÉP PHÔNG CHỮ TIMES NEW ROMAN CHO TOÀN BỘ ỨNG DỤNG */
+    * {
+        font-family: 'Times New Roman', Times, serif !important;
     }
     
-    /* Ép toàn bộ chữ mặc định trong ứng dụng thành màu tối để dễ đọc */
-    h1, h2, h3, h4, h5, h6, p, span, label, li {
+    /* 2. CHUYỂN TOÀN BỘ CHỮ SANG MÀU TỐI ĐỂ NỔI TRÊN NỀN SÁNG */
+    h1, h2, h3, h4, h5, h6, p, span, label, li, td, th {
         color: #1e293b !important;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
-    /* Định dạng tiêu đề chính */
+    /* 3. NỀN TRANG WEB SÁNG DỊU MẮT */
+    [data-testid="stAppViewContainer"] {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+    }
+
+    /* Tiêu đề chính */
     .main-title {
         color: #0f172a !important;
         text-align: center;
         margin-bottom: 30px;
         font-size: 34px !important;
         font-weight: 800 !important;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
     }
 
-    /* Các khung chứa thông tin nhập liệu */
-    .input-card {
-        background-color: #ffffff !important;
-        border-radius: 16px !important;
-        padding: 25px !important;
-        border: 1px solid #e2e8f0 !important;
-        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05) !important;
-        margin-bottom: 25px !important;
-    }
-
-    /* Các khung chứa kết quả tính toán */
-    .result-card {
-        background-color: #ffffff !important;
-        border-radius: 16px !important;
-        padding: 25px !important;
-        border: 1px solid #e2e8f0 !important;
-        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05) !important;
-        margin-bottom: 25px !important;
-        text-align: center;
-    }
-    .result-card .label {
-        font-size: 15px !important;
-        color: #64748b !important;
-        font-weight: 600 !important;
-        margin-bottom: 5px !important;
-    }
-    .result-card .value {
-        font-size: 26px !important;
-        font-weight: 800 !important;
-        color: #0284c7 !important; /* Xanh dương nổi bật */
-        margin-bottom: 0px !important;
-    }
-
-    /* Khung tư vấn tài chính */
-    .advice-card {
-        background-color: #f0fdf4 !important; /* Nền xanh lá nhạt */
-        border-radius: 12px !important;
-        padding: 20px !important;
-        border: 1px solid #bbf7d0 !important;
-        margin-top: 15px !important;
-    }
-    .advice-card .title {
-        font-size: 18px !important;
-        font-weight: 800 !important;
-        color: #166534 !important;
-        margin-bottom: 10px !important;
-    }
-    .advice-card li {
-        color: #15803d !important;
-        margin-bottom: 5px !important;
-        font-size: 15px !important;
-        font-weight: 500 !important;
-    }
-
-    /* Ép các ô Input, Selectbox về màu sáng dễ nhìn */
-    div[data-baseweb="input"], div[data-baseweb="select"] {
+    /* 4. CHỈNH Ô NHẬP SỐ (NUMBER INPUT) THÀNH MÀU TRẮNG */
+    div[data-baseweb="input"] {
         background-color: #ffffff !important;
         border: 1px solid #cbd5e1 !important;
         border-radius: 8px !important;
     }
-    input {
-        color: #1e293b !important;
-    }
-    div[data-testid="stWidgetLabel"] p {
-        color: #475569 !important;
-        font-weight: 600 !important;
-    }
-
-    /* Làm đẹp bảng hiển thị tổng quan */
-    .stTable table {
+    div[data-baseweb="input"] input {
         background-color: #ffffff !important;
         color: #1e293b !important;
+    }
+    /* Nút tăng/giảm số (+/-) */
+    div[data-baseweb="input"] button {
+        background-color: #f1f5f9 !important;
+        color: #1e293b !important;
+        border: none !important;
+    }
+
+    /* 5. CHỈNH Ô CHỌN (SELECTBOX) THÀNH MÀU TRẮNG */
+    div[data-baseweb="select"] {
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+    }
+    div[data-baseweb="select"] > div {
+        background-color: #ffffff !important;
+        color: #1e293b !important;
+    }
+    div[data-baseweb="select"] span {
+        color: #1e293b !important;
+    }
+    /* Biểu tượng mũi tên trỏ xuống */
+    div[data-baseweb="select"] svg {
+        fill: #1e293b !important;
+    }
+
+    /* Đổi màu menu danh sách lựa chọn khi click mở Selectbox */
+    div[role="listbox"] {
+        background-color: #ffffff !important;
+    }
+    div[role="listbox"] * {
+        color: #1e293b !important;
+        background-color: #ffffff !important;
+    }
+
+    /* 6. CHỈNH THANH TRƯỢT (SLIDER) */
+    div[data-testid="stSlider"] * {
+        color: #1e293b !important;
+    }
+
+    /* 7. CHỈNH ĐẦU BẢNG (TABLE HEADER) THÀNH MÀU TRẮNG/XÁM SÁNG */
+    .stTable table {
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
         border-collapse: collapse !important;
         border-radius: 8px !important;
         overflow: hidden !important;
     }
     .stTable th {
-        background-color: #0f172a !important;
-        color: #ffffff !important;
+        background-color: #f1f5f9 !important; /* Đổi đầu bảng từ đen sang xám trắng */
+        color: #0f172a !important; /* Chữ màu đen sẫm dễ nhìn */
+        font-weight: bold !important;
+        border-bottom: 2px solid #cbd5e1 !important;
         padding: 12px !important;
     }
     .stTable td {
         background-color: #ffffff !important;
         color: #334155 !important;
-        padding: 12px !important;
         border-bottom: 1px solid #e2e8f0 !important;
+        padding: 12px !important;
+    }
+
+    /* 8. THIẾT KẾ CONTAINER CARD TRẮNG BO TRÒN */
+    .input-card, .result-card {
+        background-color: #ffffff !important;
+        border-radius: 16px !important;
+        padding: 25px !important;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05) !important;
+        margin-bottom: 25px !important;
+    }
+    
+    .result-card .label {
+        font-size: 15px !important;
+        color: #64748b !important;
+        font-weight: bold !important;
+    }
+    
+    .result-card .value {
+        font-size: 26px !important;
+        font-weight: bold !important;
+        color: #0284c7 !important;
+    }
+
+    /* Khung tư vấn */
+    .advice-card {
+        background-color: #f0fdf4 !important;
+        border: 1px solid #bbf7d0 !important;
+        border-radius: 12px !important;
+        padding: 20px !important;
+        margin-top: 15px !important;
+    }
+    .advice-card .title {
+        font-size: 18px !important;
+        font-weight: bold !important;
+        color: #166534 !important;
+        margin-bottom: 10px !important;
+    }
+    .advice-card li {
+        color: #15803d !important;
+        font-size: 15px !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -135,7 +165,7 @@ lai_suat = {
     "Du học": 9
 }
 
-# Khung nhập thông tin
+# Khung nhập thông tin vay
 st.markdown('<div class="input-card">', unsafe_allow_html=True)
 st.write("### 📝 Nhập thông tin kế hoạch vay")
 
@@ -168,7 +198,7 @@ st.info(f"💡 Lãi suất áp dụng cho mục đích **{muc_dich}**: **{lai_na
 st.markdown('</div>', unsafe_allow_html=True)
 
 #==========================
-# Tính toán các phương thức
+# Tính toán
 #==========================
 thang = thoi_han * 12
 lai_thang = lai_nam / 100 / 12
