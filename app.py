@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-
+import matplotlib.pyplot as plt
 st.set_page_config(page_title="Ứng dụng tính khoản vay", layout="wide")
 
 st.title("🏦 ỨNG DỤNG TÍNH TIỀN VAY NGÂN HÀNG")
