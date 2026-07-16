@@ -233,6 +233,7 @@ else:
 
 #==========================
 #==========================
+#==========================
 # BIỂU ĐỒ CỘT THEO NĂM
 #==========================
 
@@ -241,11 +242,11 @@ st.header("📊 Biểu đồ số tiền còn lại phải trả theo năm")
 # Lấy dữ liệu cuối mỗi năm
 df_nam = df1[df1["Tháng"] % 12 == 0].copy()
 
-# Thêm cột năm
+# Tạo cột năm
 df_nam["Năm"] = range(1, len(df_nam) + 1)
 
+# Hiển thị biểu đồ
 st.bar_chart(
-    data=df_nam.set_index("Năm")["Dư nợ còn lại"]
+    df_nam.set_index("Năm")["Dư nợ còn lại"]
 )
-
 st.pyplot(fig)
