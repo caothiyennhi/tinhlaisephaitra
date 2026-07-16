@@ -54,59 +54,64 @@ st.markdown("""
     }
 
 /* =========================================================================
-       3. SỬA TRIỆT ĐỂ Ô CHỌN (SELECTBOX - MỤC ĐÍCH VAY) THÀNH TRẮNG, CHỮ ĐEN 
+       SỬA TRIỆT ĐỂ Ô CHỌN (MỤC ĐÍCH VAY) GIỐNG HỆT Ô SỐ TIỀN VAY
        ========================================================================= */
-    /* Khung viền ngoài của ô chọn (Selectbox) */
-    div[data-baseweb="select"] {
-        background-color: #000000 !important;
-        border: 2px solid #ffffff !important; /* Viền đen rõ nét */
+    
+    /* 1. KHUNG CHÍNH CỦA Ô CHỌN: Nền trắng, viền xám mỏng, chữ đen */
+    div[data-testid="stSelectbox"] div[data-baseweb="select"] {
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important; /* Viền mỏng y hệt ô Số tiền vay */
         border-radius: 8px !important;
+        color: #000000 !important;
     }
     
-    /* Chữ hiển thị bên trong ô chọn sau khi đã chọn */
-    div[data-baseweb="select"] * {
+    /* Ép tất cả các thẻ con bên trong khung chính thành chữ đen, nền trong suốt */
+    div[data-testid="stSelectbox"] div[data-baseweb="select"] * {
         background-color: transparent !important;
-        color: #ffffff !important; /* Chữ trắng */
+        color: #000000 !important;
     }
     
-    /* Màu mũi tên trỏ xuống của ô chọn */
-    div[data-baseweb="select"] svg {
+    /* Đổi màu mũi tên trỏ xuống thành màu đen */
+    div[data-testid="stSelectbox"] svg {
         fill: #000000 !important;
     }
 
-    /* --- MENU THẢ XUỐNG KHI CLICK VÀO Ô CHỌN (DROPDOWN POPUP) --- */
-    /* Khung chứa menu thả xuống */
+    /* 2. KHUNG MENU SỔ XUỐNG (POP-UP): Ép nền trắng hoàn toàn */
     div[data-baseweb="popover"] {
         background-color: #ffffff !important;
     }
-    div[data-baseweb="popover"] ul {
+    
+    /* Ép danh sách (ul) bên trong thành nền trắng và viền mỏng */
+    div[data-baseweb="popover"] [role="listbox"] {
         background-color: #ffffff !important;
-        border: 2px solid #000000 !important; /* Viền đen bao quanh menu */
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 8px !important;
     }
     
-    /* Từng dòng lựa chọn bên trong menu thả xuống (ví dụ: Mua nhà, Mua ô tô...) */
-    div[data-baseweb="popover"] li {
+    /* Ép từng dòng lựa chọn (li) thành nền trắng, chữ đen */
+    div[data-baseweb="popover"] [role="option"] {
         background-color: #ffffff !important;
-        color: #000000 !important; /* Chữ đen */
+        color: #000000 !important;
     }
     
-    /* Ép tất cả các thẻ con bên trong dòng lựa chọn thành chữ đen (Sửa lỗi chữ trắng tàng hình) */
-    div[data-baseweb="popover"] li * {
-        color: #000000 !important; 
+    /* Ép chữ của từng lựa chọn bên trong thành đen đậm rõ nét */
+    div[data-baseweb="popover"] [role="option"] * {
         background-color: transparent !important;
+        color: #000000 !important;
     }
     
-    /* Hiệu ứng khi bạn di chuột qua dòng lựa chọn */
-    div[data-baseweb="popover"] li:hover {
-        background-color: #e2e8f0 !important; /* Nền xám nhạt khi hover */
+    /* HIỆU ỨNG KHI RE CHUỘT (HOVER) HOẶC ĐANG CHỌN (SELECTED) */
+    /* Khi chỉ chuột vào dòng: chuyển sang màu xám cực nhẹ, chữ vẫn đen */
+    div[data-baseweb="popover"] [role="option"]:hover,
+    div[data-baseweb="popover"] [role="option"]:focus,
+    div[data-baseweb="popover"] [role="option"][aria-selected="true"] {
+        background-color: #f1f5f9 !important; /* Nền xám nhạt nhẹ nhàng */
     }
-    div[data-baseweb="popover"] li:hover * {
+    
+    div[data-baseweb="popover"] [role="option"]:hover *,
+    div[data-baseweb="popover"] [role="option"][aria-selected="true"] * {
         color: #000000 !important;
-    }
-
-    /* Thanh trượt (Slider) chữ đen */
-    div[data-testid="stSlider"] * {
-        color: #000000 !important;
+        font-weight: bold !important; /* Chữ đậm lên khi chọn */
     }
 
     /* 4. CHỈNH KHUNG BẢNG TỔNG HỢP THÀNH LƯỚI 3X3 CÓ GẠCH CHIA Ô MÀU ĐEN RÕ RÀNG */
