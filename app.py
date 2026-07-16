@@ -249,4 +249,4 @@ df_nam["Năm"] = range(1, len(df_nam) + 1)
 st.bar_chart(
     df_nam.set_index("Năm")["Dư nợ còn lại"]
 )
-st.pyplot(fig)
+
